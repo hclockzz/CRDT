@@ -97,6 +97,37 @@ class TestCRDT(unittest.TestCase):
         self.assertEqual(rem_set["Onion"], ts3)
                
 
+    def test_exist_true_membership(self):
+        test_obj = self.obj
+        ts1 = getCurrentTime()
+        test_obj.add("Onion", ts1) 
+        
+        res = test_obj.exist("Onion")
+        self.assertTrue(res)
+
+    def test_exist_false_membership(self):
+        test_obj = self.obj
+        ts1 = getCurrentTime()
+        test_obj.add("Onion", ts1) 
+        
+        res = test_obj.exist("Ginger")
+        self.assertFalse(res)
+
+    def test_exist_true_membership_bytimestamp(self):
+        test_obj = self.obj
+        ts1 = getCurrentTime()
+        test_obj.add("Onion", ts1) 
+
+        ts2 = getCurrentTime()
+        test_obj.remove("Onion", ts2)
+
+        ts3 = getCurrentTime()
+        test_obj.add("Onion", ts3)    
+
+        res = test_obj.exist("Onion")
+        self.assertTrue(res)    
+
+   
 """
 test exist():
 - test non-existant element
