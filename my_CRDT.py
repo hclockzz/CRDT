@@ -1,5 +1,8 @@
 """
 Thread-operation are left on the caller' side (using Syncronized block/method, or other implementation) 
+
+execute tests:
+python -m unittest discover -s . -p "test*.py"
 """
 class myCRDT:
     def __init__(self):
@@ -15,8 +18,8 @@ class myCRDT:
         
     def add(self, e, t):
         if e not in self.__add_set:
+            self.__add_set[e] = t
             if e not in self.__rem_set or t > self.__rem_set[e]:
-                self.__add_set[e] = t
                 self.val_set.add(e)
         else:
             if t > self.__add_set[e]:
@@ -27,11 +30,9 @@ class myCRDT:
         
     def remove(self, e, t):
         if e not in self.__rem_set:
-            if e not in self.__add_set or t > self.__add_set[e]:
-                self.__rem_set[e] = t
-                
-                if e in self.val_set:
-                    self.val_set.remove(e)
+            self.__rem_set[e] = t
+            if e in self.val_set and t > self.__add_set[e]:
+                self.val_set.remove(e)
         else:
             if t > self.__rem_set[e]:
                 self.__rem_set[e] = t
