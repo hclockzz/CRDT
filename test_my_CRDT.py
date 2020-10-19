@@ -21,25 +21,25 @@ class TestCRDT(unittest.TestCase):
     
     def test_add_multi_values(self):
         test_obj = self.obj
-        print("Before assert", test_obj.get_addset())
+        # print("Before assert", test_obj.get_addset())
         ts = getCurrentTime()
         test_obj.add("Onion", ts)
 
         ts = getCurrentTime()
         test_obj.add("Egg", ts)
         self.assertEqual(test_obj.get(), {"Egg", "Onion"})
-        print("After assert", test_obj.get_addset())
+        # print("After assert", test_obj.get_addset())
     
     def test_remove_single_value(self):
         ts = getCurrentTime()
         test_obj = self.obj
         test_obj.add("Spinach", ts)
-        print("After adding", test_obj.get_addset())
+        # print("After adding", test_obj.get_addset())
 
         ts = getCurrentTime()
         test_obj.remove("Spinach",ts)
         self.assertEqual(test_obj.get(), set())
-        print("After removing", test_obj.get_remset())
+        # print("After removing", test_obj.get_remset())
     
     def test_remove_multi_values(self):
         test_obj = self.obj
@@ -52,7 +52,7 @@ class TestCRDT(unittest.TestCase):
         ts = getCurrentTime()
         test_obj.add("Pie", ts)
 
-        print("After adding", test_obj.get_addset())
+        # print("After adding", test_obj.get_addset())
 
         ts = getCurrentTime()
         test_obj.remove("Pie",ts)

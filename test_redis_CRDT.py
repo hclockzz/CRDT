@@ -57,9 +57,9 @@ class TestCRDT(unittest.TestCase):
         test_obj.remove("Lemon", ts)
 
         add_set= self.__fetch_add_set()
-        print(add_set)
+        # print(add_set)
         rem_set = self.__fetch_rem_set()
-        print(rem_set)
+        # print(rem_set)
         self.assertEqual(set(rem_set.keys()), {"Apple", "Lemon"})
 
         

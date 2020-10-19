@@ -1,19 +1,23 @@
+"""
+execute tests:
+python -m unittest discover -s . -p "test*.py"
+"""
+
 import redis
-# import config
 
 class redisCRDT:
     def __init__(self, server):
-        self.client = server
+        self.__client = server
 
     def get_add_ts(self, e):
-        ts = self.client.zscore("add_set", e)
+        ts = self.__client.zscore("add_set", e)
         if ts:
             return ts
         else:
             return None
 
     def get_rem_ts(self, e):
-        ts = self.client.zscore("rem_set", e)
+        ts = self.__client.zscore("rem_set", e)
         if ts:
             return ts
         else:
@@ -24,17 +28,15 @@ class redisCRDT:
         old_ts = self.get_add_ts(e)
         if old_ts:
             if t > old_ts:
-                self.client.zadd("add_set", {str(e):str(t)})
+                self.__client.zadd("add_set", {str(e):str(t)})
         else:
-            res = self.client.zadd("add_set", {str(e):str(t)})
-            print(res)
+            res = self.__client.zadd("add_set", {str(e):str(t)})
     
     def remove(self, e, t):
         old_ts = self.get_rem_ts(e)
         if old_ts:
             if t > old_ts:
-                self.client.zadd("rem_set", {str(e):str(t)})
+                self.__client.zadd("rem_set", {str(e):str(t)})
         else:
-            res = self.client.zadd("rem_set", {str(e):str(t)})
-            print(res)
+            res = self.__client.zadd("rem_set", {str(e):str(t)})
 
